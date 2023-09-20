@@ -55,7 +55,8 @@ void execute(char *opcode, char *value_str, int line_number, stack_t **stack)
 	instruction_t instructions[] = {
 		{"push", push}, {"pall", pall}, {"pint", pint},
 		{"pop", pop}, {"swap", swap}, {"add", add},
-		{"nop", nop}, {NULL, NULL}
+		{"nop", nop}, {"div", divi}, {"mul", mul},
+		{"mod", mod}, {NULL, NULL}
 	};
 
 	if (opcode)
@@ -76,13 +77,11 @@ void execute(char *opcode, char *value_str, int line_number, stack_t **stack)
 				}
 				instructions[i].f(stack, line_number);
 			}
-			else if (strcmp(opcode, "pall") != 0 &&
-					strcmp(opcode, "push") != 0 &&
-					strcmp(opcode, "pop") != 0 &&
-					strcmp(opcode, "swap") != 0 &&
-					strcmp(opcode, "add") != 0 &&
-					strcmp(opcode, "nop") != 0 &&
-					strcmp(opcode, "pint") != 0)
+			else if (strcmp(opcode, "pall") != 0 && strcmp(opcode, "push") != 0 &&
+					strcmp(opcode, "pop") != 0 && strcmp(opcode, "swap") != 0 &&
+					strcmp(opcode, "add") != 0 && strcmp(opcode, "nop") != 0 &&
+					strcmp(opcode, "div") != 0 && strcmp(opcode, "mul") != 0 &&
+					strcmp(opcode, "mod") != 0 && strcmp(opcode, "pint") != 0)
 			{
 				fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
 				free_stack(stack);
