@@ -46,28 +46,23 @@ void pchar(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * pstr - prints the string starting at the top of the stack
+ * pstr - Prints the string starting at the top of the stack
  * @stack: Pointer to the top of the stack
  * @line_number: Line number being executed
  */
 void pstr(stack_t **stack, unsigned int line_number)
 {
-	int value;
-	unsigned int i;
-	stack_t *temp = *stack;
+	stack_t *current = *stack;
+	(void)line_number;
 
-	if (line_number > 1)
+	while (current != NULL && current->n != 0 &&
+		current->n >= 0 && current->n <= 127)
 	{
-		for (i = 0; i < line_number; i++)
-		{
-			value = temp->n;
-			if (value < 0 || value > 127 || value == 0)
-				break;
-			printf("%c", value);
-			temp = temp->next;
-		}
+		putchar(current->n);
+		current = current->next;
 	}
-	printf("\n");
+
+	putchar('\n');
 }
 
 /**
