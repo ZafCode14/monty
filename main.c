@@ -57,7 +57,7 @@ void execute(char *opcode, char *value_str, int line_number, stack_t **stack)
 		{"push", push}, {"pall", pall}, {"pint", pint}, {"pop", pop},
 		{"swap", swap}, {"add", add}, {"nop", nop}, {"div", divi},
 		{"mul", mul}, {"mod", mod}, {"sub", sub}, {"pchar", pchar},
-		{"pstr", pstr}, {"rotl", rotl}, {NULL, NULL}
+		{"pstr", pstr}, {"rotl", rotl}, {"rotr", rotr}, {NULL, NULL}
 	};
 
 	if (opcode)
