@@ -44,3 +44,55 @@ void pchar(stack_t **stack, unsigned int line_number)
 	}
 	printf("%c\n", value);
 }
+
+/**
+ * pstr - prints the string starting at the top of the stack
+ * @stack: Pointer to the top of the stack
+ * @line_number: Line number being executed
+ */
+void pstr(stack_t **stack, unsigned int line_number)
+{
+	int value;
+	unsigned int i;
+	stack_t *temp = *stack;
+
+	if (line_number > 1)
+	{
+		for (i = 0; i < line_number; i++)
+		{
+			value = temp->n;
+			if (value < 0 || value > 127 || value == 0)
+				break;
+			printf("%c", value);
+			temp = temp->next;
+		}
+	}
+	printf("\n");
+}
+
+/**
+ * rotl - Rotates the stack to the left
+ * @stack: Pointer to the top of the stack
+ * @line_number: Line number being executed
+ */
+void rotl(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp, *last;
+	(void)line_number;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+		return;
+
+	temp = *stack;
+	last = *stack;
+
+	while (last->next != NULL)
+		last = last->next;
+
+	*stack = temp->next;
+	(*stack)->prev = NULL;
+
+	last->next = temp;
+	temp->prev = last;
+	temp->next = NULL;
+}

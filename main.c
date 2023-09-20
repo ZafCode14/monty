@@ -54,16 +54,20 @@ int main(int argc, char *argv[])
 void execute(char *opcode, char *value_str, int line_number, stack_t **stack)
 {
 	int i;
+	int found = 0;
 	instruction_t instructions[] = {
 		{"push", push}, {"pall", pall}, {"pint", pint},
 		{"pop", pop}, {"swap", swap}, {"add", add},
 		{"nop", nop}, {"div", divi}, {"mul", mul},
 		{"mod", mod}, {"sub", sub}, {"pchar", pchar},
-		{NULL, NULL}
+		{"pstr", pstr}, {"rotl", rotl}, {NULL, NULL}
 	};
 
 	if (opcode)
 	{
+		for (i = 0; instructions[i].opcode; i++)
+			if (strcmp(opcode, instructions[i].opcode) == 0)
+				found = 1;
 		for (i = 0; instructions[i].opcode; i++)
 		{
 			if (strcmp(instructions[i].opcode, opcode) == 0)
@@ -80,12 +84,7 @@ void execute(char *opcode, char *value_str, int line_number, stack_t **stack)
 				}
 				instructions[i].f(stack, line_number);
 			}
-			else if (strcmp(opcode, "pall") != 0 && strcmp(opcode, "push") != 0 &&
-					strcmp(opcode, "pop") != 0 && strcmp(opcode, "swap") != 0 &&
-					strcmp(opcode, "add") != 0 && strcmp(opcode, "nop") != 0 &&
-					strcmp(opcode, "div") != 0 && strcmp(opcode, "mul") != 0 &&
-					strcmp(opcode, "sub") != 0 && strcmp(opcode, "pchar") != 0 &&  
-					strcmp(opcode, "mod") != 0 && strcmp(opcode, "pint") != 0)
+			else if (!found)
 			{
 				fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
 				free_stack(stack);
