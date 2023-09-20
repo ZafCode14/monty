@@ -56,7 +56,7 @@ void execute(char *opcode, char *value_str, int line_number, stack_t **stack)
 		{"push", push}, {"pall", pall}, {"pint", pint},
 		{"pop", pop}, {"swap", swap}, {"add", add},
 		{"nop", nop}, {"div", divi}, {"mul", mul},
-		{"mod", mod}, {NULL, NULL}
+		{"mod", mod}, {"sub", sub}, {NULL, NULL}
 	};
 
 	if (opcode)
@@ -81,6 +81,7 @@ void execute(char *opcode, char *value_str, int line_number, stack_t **stack)
 					strcmp(opcode, "pop") != 0 && strcmp(opcode, "swap") != 0 &&
 					strcmp(opcode, "add") != 0 && strcmp(opcode, "nop") != 0 &&
 					strcmp(opcode, "div") != 0 && strcmp(opcode, "mul") != 0 &&
+					strcmp(opcode, "sub") != 0 && 
 					strcmp(opcode, "mod") != 0 && strcmp(opcode, "pint") != 0)
 			{
 				fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
