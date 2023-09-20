@@ -2,12 +2,27 @@
 #define MONTY_H
 
 #define _POSIX_C_SOURCE 200809L
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
-extern int value;
+#define STACK 1
+#define QUEUE 0
+
+/**
+ * struct global_s - a struct of global variabes
+ * @value: the value global variable
+ * @mode: the mode global variable
+ */
+typedef struct global_s
+{
+	int value;
+	int mode;
+} global_t;
+
+extern global_t *global;
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -55,6 +70,8 @@ void pchar(stack_t **stack, unsigned int line_number);
 void pstr(stack_t **stack, unsigned int line_number);
 void rotl(stack_t **stack, unsigned int line_number);
 void rotr(stack_t **stack, unsigned int line_number);
+void stackk(stack_t **stack, unsigned int line_number);
+void queue(stack_t **stack, unsigned int line_number);
 int is_integer(char *str);
 void free_stack(stack_t **stack);
 

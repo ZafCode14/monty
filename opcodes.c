@@ -1,8 +1,8 @@
 #include "monty.h"
 
 /**
- * push - Pushes a new element onto the stack.
- * @stack: Pointer to the top of the stack
+ * push - Pushes a new element onto the stack (LIFO) or the queue (FIFO).
+ * @stack: Pointer to the top of the stack or queue
  * @line_number: Line number being executed
  */
 void push(stack_t **stack, unsigned int line_number)
@@ -16,20 +16,39 @@ void push(stack_t **stack, unsigned int line_number)
 		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-
-	new_node->n = value;
+	new_node->n = global->value;
 	new_node->prev = NULL;
-
-	if (*stack != NULL)
+	if (global->mode == STACK)
 	{
-		new_node->next = *stack;
-		(*stack)->prev = new_node;
+		if (*stack != NULL)
+		{
+			new_node->next = *stack;
+			(*stack)->prev = new_node;
+		}
+		else
+			new_node->next = NULL;
+		*stack = new_node;
 	}
-	else
-		new_node->next = NULL;
+	else if (global->mode == QUEUE)
+	{
+		if (*stack != NULL)
+		{
+			stack_t *temp = *stack;
 
-	*stack = new_node;
+			while (temp->next)
+				temp = temp->next;
+			temp->next = new_node;
+			new_node->prev = temp;
+			new_node->next = NULL;
+		}
+		else
+		{
+			new_node->next = NULL;
+			*stack = new_node;
+		}
+	}
 }
+
 
 /**
  * pall - Prints all elements in the stack.
@@ -39,7 +58,6 @@ void push(stack_t **stack, unsigned int line_number)
 void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp = *stack;
-
 	(void)line_number;
 
 	while (temp)
@@ -63,6 +81,7 @@ void pint(stack_t **stack, unsigned int line_number)
 		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
+
 	printf("%d\n", temp->n);
 }
 
@@ -102,10 +121,10 @@ void swap(stack_t **stack, unsigned int line_number)
 		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
 		exit(EXIT_FAILURE);
 	}
+
 	temp = (*stack)->next;
 	(*stack)->next = temp->next;
 	temp->prev = NULL;
-
 	if (temp->next != NULL)
 		temp->next->prev = *stack;
 

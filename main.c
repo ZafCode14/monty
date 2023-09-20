@@ -1,6 +1,6 @@
 #include "monty.h"
 
-int value;
+global_t *global;
 
 /**
  * main - the main function
@@ -19,6 +19,13 @@ int main(int argc, char *argv[])
 	int line_number = 0;
 	stack_t *stack = NULL;
 
+	global = malloc(sizeof(global_t));
+	if (global == NULL)
+	{
+		fprintf(stderr, "Error: Failed to allocate memory for global\n");
+		exit(EXIT_FAILURE);
+	}
+	global->mode = STACK;
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
@@ -40,8 +47,10 @@ int main(int argc, char *argv[])
 	free(line);
 	fclose(file);
 	free_stack(&stack);
+	free(global);
 	exit(EXIT_SUCCESS);
 }
+
 /**
  * execute - executes the opcodes
  * @opcode: pointer to the opcode string
@@ -51,13 +60,13 @@ int main(int argc, char *argv[])
  */
 void execute(char *opcode, char *value_str, int line_number, stack_t **stack)
 {
-	int i;
-	int found = 0;
+	int i, found = 0;
 	instruction_t instructions[] = {
 		{"push", push}, {"pall", pall}, {"pint", pint}, {"pop", pop},
 		{"swap", swap}, {"add", add}, {"nop", nop}, {"div", divi},
 		{"mul", mul}, {"mod", mod}, {"sub", sub}, {"pchar", pchar},
-		{"pstr", pstr}, {"rotl", rotl}, {"rotr", rotr}, {NULL, NULL}
+		{"pstr", pstr}, {"rotl", rotl}, {"rotr", rotr},
+		{"stack", stackk}, {"queue", queue}, {NULL, NULL}
 	};
 
 	if (opcode)
@@ -79,7 +88,7 @@ void execute(char *opcode, char *value_str, int line_number, stack_t **stack)
 						free_stack(stack);
 						exit(EXIT_FAILURE);
 					}
-					value = atoi(value_str);
+					global->value = atoi(value_str);
 				}
 				instructions[i].f(stack, line_number);
 			}
