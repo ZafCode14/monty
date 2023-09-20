@@ -68,6 +68,8 @@ void execute(char *opcode, char *value_str, int line_number, stack_t **stack)
 				found = 1;
 		for (i = 0; instructions[i].opcode; i++)
 		{
+			if (opcode[0] == '#')
+				continue;
 			if (strcmp(instructions[i].opcode, opcode) == 0)
 			{
 				if (strcmp(opcode, "push") == 0)
