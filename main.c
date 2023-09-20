@@ -34,6 +34,8 @@ int main(int argc, char *argv[])
 	{
 		line_number++;
 		opcode = strtok(line, " \t\n");
+		if (opcode[0] == '#')
+			continue;
 		value_str = strtok(NULL, " \t\n");
 		execute(opcode, value_str, line_number, &stack);
 	}
