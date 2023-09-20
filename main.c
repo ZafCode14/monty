@@ -54,10 +54,9 @@ void execute(char *opcode, char *value_str, int line_number, stack_t **stack)
 	int i;
 	int found = 0;
 	instruction_t instructions[] = {
-		{"push", push}, {"pall", pall}, {"pint", pint},
-		{"pop", pop}, {"swap", swap}, {"add", add},
-		{"nop", nop}, {"div", divi}, {"mul", mul},
-		{"mod", mod}, {"sub", sub}, {"pchar", pchar},
+		{"push", push}, {"pall", pall}, {"pint", pint}, {"pop", pop},
+		{"swap", swap}, {"add", add}, {"nop", nop}, {"div", divi},
+		{"mul", mul}, {"mod", mod}, {"sub", sub}, {"pchar", pchar},
 		{"pstr", pstr}, {"rotl", rotl}, {NULL, NULL}
 	};
 
